@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# ======================================================================================
+# SUPERSEDED (Oct 2026). Kept unchanged below as the record of the submitted SPMB 2026 paper.
+# Issue: night-2 update/probe split is random (not chronological) and the probe set changes across
+# update fractions.
+# Corrected protocol and results: revision_2026-10/ (see README.md, section 'Correction').
+# ======================================================================================
 """
 Wave-2: RE-ENROLMENT simulation. After night-to-night drift, how much fresh (night-2) data
 restores accuracy? Template = night-1 enrol + fraction f of night-2 epochs; probe = held-out

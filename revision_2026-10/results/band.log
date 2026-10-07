@@ -1,0 +1,7 @@
+[2026-10-04 04:50:35] loaded <SOURCE_ROOT>/emb_ablation.pkl: keys ['baseline', 'delta', 'theta', 'alpha', 'sigma', 'beta']; subjects 29
+[2026-10-04 04:52:06] band delta: dEER +2.39  CI [1.26, 3.61]  p=2.60770320892334e-08
+[2026-10-04 04:53:37] band theta: dEER +4.72  CI [2.72, 6.29]  p=2.9281330722765716e-06
+[2026-10-04 04:55:08] band alpha: dEER +1.86  CI [0.87, 2.94]  p=6.910413503646851e-07
+[2026-10-04 04:56:37] band sigma: dEER +1.62  CI [0.45, 2.81]  p=5.964189767837524e-06
+[2026-10-04 04:58:08] band beta: dEER +2.25  CI [0.54, 3.77]  p=0.00016040776468816045
+[2026-10-04 04:58:08] BAND done -> band_ablation_leakfree.json

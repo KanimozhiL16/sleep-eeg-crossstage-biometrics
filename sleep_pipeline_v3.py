@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# ======================================================================================
+# SUPERSEDED (Oct 2026). Kept unchanged below as the record of the submitted SPMB 2026 paper.
+# Issue: crossstage / stage_ttd use the leaky template/probe construction (old time-to-decision
+# numbers).
+# Corrected protocol and results: revision_2026-10/ (see README.md, section 'Correction').
+# ======================================================================================
 """
 v3 add-on — corrected CIs + deployment experiments. Reuses cached features (no re-download).
 

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# ======================================================================================
+# SUPERSEDED (Oct 2026). Kept unchanged below as the record of the submitted SPMB 2026 paper.
+# Issue: per_subject_eer uses the leaky template/probe construction, so the Wilcoxon p, d and gap
+# reported in June are invalid.
+# Corrected protocol and results: revision_2026-10/ (see README.md, section 'Correction').
+# ======================================================================================
 """
 Statistical validation (no new data/GPU). Per-subject EERs on EVAL subjects, then:
   - within-stage vs cross-stage gap: Wilcoxon signed-rank + paired bootstrap ΔEER 95% CI + Cohen's d

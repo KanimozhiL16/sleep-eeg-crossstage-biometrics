@@ -1,0 +1,33 @@
+{
+  "consistency": {
+    "SC4461": {
+      "shape_new": [
+        2695,
+        128
+      ],
+      "shape_saved": [
+        2695,
+        128
+      ],
+      "min_cosine_new_vs_saved": 0.9999995231628418
+    },
+    "SC4531": {
+      "shape_new": [
+        2602,
+        128
+      ],
+      "shape_saved": [
+        2602,
+        128
+      ],
+      "min_cosine_new_vs_saved": 0.9999994039535522
+    }
+  },
+  "runtime": {
+    "encoder_parameters": 204384,
+    "model_size_MB_fp32": 0.78,
+    "ms_per_30s_epoch_batched": 3.261,
+    "device": "cpu",
+    "hardware": "x86_64"
+  }
+}

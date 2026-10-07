@@ -1,0 +1,26 @@
+{
+  "step": "main",
+  "root": "<SOURCE_ROOT>",
+  "out": "<OUT>",
+  "train_frac": 0.6,
+  "seed": 42,
+  "guard": 10,
+  "min_ep": 10,
+  "fuse": 10,
+  "fuse_list": [
+    1,
+    2,
+    5,
+    10,
+    20
+  ],
+  "K": 20,
+  "boot": 1000,
+  "wake_trim_min": 30.0,
+  "emb": 128,
+  "emb_n1": "<SOURCE_ROOT>/features2_enc",
+  "emb_n2": "<OUT>/emb_n2",
+  "n2_cache": null,
+  "pkl": null,
+  "use": "trim"
+}

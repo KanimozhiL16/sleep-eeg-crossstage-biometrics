@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# ======================================================================================
+# SUPERSEDED (Oct 2026). Kept unchanged below as the record of the submitted SPMB 2026 paper.
+# Issue: training is unaffected, but its evaluation calls sleep_pipeline_v2 (leaky within-stage
+# EER 0.21%) and uses the duplicate-identity bootstrap.
+# Corrected protocol and results: revision_2026-10/ (see README.md, section 'Correction').
+# ======================================================================================
 """
 Tier C — learned EEG embedding encoder (subject-disjoint, GPU/PyTorch).
 

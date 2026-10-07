@@ -1,0 +1,38 @@
+[2026-10-04 04:30:32] EMBED start device=cpu (inference only, no training)
+[2026-10-04 04:30:32] EVAL split matches features2_enc/ (29 subjects)
+[2026-10-04 04:33:08] TRAIN z-norm stats computed over 44 subjects -> <OUT>/norm_stats.npz
+[2026-10-04 04:33:33] consistency check (expect shapes equal and min cosine > 0.999): {'SC4461': {'shape_new': [2695, 128], 'shape_saved': [2695, 128], 'min_cosine_new_vs_saved': 0.9999995231628418}, 'SC4531': {'shape_new': [2602, 128], 'shape_saved': [2602, 128], 'min_cosine_new_vs_saved': 0.9999994039535522}}
+[2026-10-04 04:33:36] runtime: {'encoder_parameters': 204384, 'model_size_MB_fp32': 0.78, 'ms_per_30s_epoch_batched': 2.968, 'device': 'cpu', 'hardware': 'x86_64'}
+[2026-10-04 04:38:14] EMBED start device=cpu (inference only, no training)
+[2026-10-04 04:38:14] EVAL split matches features2_enc/ (29 subjects)
+[2026-10-04 04:38:30] consistency check (expect shapes equal and min cosine > 0.999): {'SC4461': {'shape_new': [2695, 128], 'shape_saved': [2695, 128], 'min_cosine_new_vs_saved': 0.9999995231628418}, 'SC4531': {'shape_new': [2602, 128], 'shape_saved': [2602, 128], 'min_cosine_new_vs_saved': 0.9999994039535522}}
+[2026-10-04 04:38:34] runtime: {'encoder_parameters': 204384, 'model_size_MB_fp32': 0.78, 'ms_per_30s_epoch_batched': 3.261, 'device': 'cpu', 'hardware': 'x86_64'}
+[2026-10-04 04:38:54]   night-2 SC4001: 2829 epochs embedded
+[2026-10-04 04:39:13]   night-2 SC4031: 2732 epochs embedded
+[2026-10-04 04:39:29]   night-2 SC4061: 2830 epochs embedded
+[2026-10-04 04:39:46]   night-2 SC4081: 2634 epochs embedded
+[2026-10-04 04:40:12]   night-2 SC4101: 2857 epochs embedded
+[2026-10-04 04:40:28]   night-2 SC4111: 2780 epochs embedded
+[2026-10-04 04:40:51]   night-2 SC4121: 2606 epochs embedded
+[2026-10-04 04:41:07]   night-2 SC4141: 2774 epochs embedded
+[2026-10-04 04:41:21]   night-2 SC4191: 2605 epochs embedded
+[2026-10-04 04:41:37]   night-2 SC4221: 2760 epochs embedded
+[2026-10-04 04:41:51]   night-2 SC4301: 2808 epochs embedded
+[2026-10-04 04:42:05]   night-2 SC4341: 2790 epochs embedded
+[2026-10-04 04:42:22]   night-2 SC4351: 2530 epochs embedded
+[2026-10-04 04:42:36]   night-2 SC4371: 2840 epochs embedded
+[2026-10-04 04:42:52]   night-2 SC4401: 2790 epochs embedded
+[2026-10-04 04:43:08]   night-2 SC4431: 2780 epochs embedded
+[2026-10-04 04:43:23]   night-2 SC4461: 2854 epochs embedded
+[2026-10-04 04:43:41]   night-2 SC4481: 2880 epochs embedded
+[2026-10-04 04:43:54]   night-2 SC4491: 2135 epochs embedded
+[2026-10-04 04:44:09]   night-2 SC4511: 2750 epochs embedded
+[2026-10-04 04:44:24]   night-2 SC4531: 2744 epochs embedded
+[2026-10-04 04:44:42]   night-2 SC4561: 2800 epochs embedded
+[2026-10-04 04:44:59]   night-2 SC4611: 2730 epochs embedded
+[2026-10-04 04:45:13]   night-2 SC4651: 2838 epochs embedded
+[2026-10-04 04:45:26]   night-2 SC4671: 2580 epochs embedded
+[2026-10-04 04:45:37]   night-2 SC4701: 2624 epochs embedded
+[2026-10-04 04:45:52]   night-2 SC4711: 2820 epochs embedded
+[2026-10-04 04:46:06]   night-2 SC4731: 2519 epochs embedded
+[2026-10-04 04:46:06] night-2 embeddings for 28 EVAL subjects -> <OUT>/emb_n2 (June run had 28)

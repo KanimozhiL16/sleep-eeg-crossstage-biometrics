@@ -1,155 +1,146 @@
-# Sleep-Stage and Night Dependence of EEG Biometric Identity
+# Sleep-Stage and Night Dependence of EEG Biometric Verification on Sleep-EDF
 
-Reference implementation for the paper:
+Code and results for:
 
-> **EEG Biometric Identity Is Sleep-Stage and Night Dependent: Per-Stage and Cross-Night Verification on Sleep-EDF**
+> **Sleep-Stage and Night Dependence of EEG Biometric Verification on Sleep-EDF**
 > L. Kanimozhi and S. Shridevi, Vellore Institute of Technology, Chennai.
-> *IEEE Signal Processing in Medicine and Biology Symposium (SPMB) 2026.*
-
-This repository contains the full pipeline used to evaluate EEG-based biometric
-verification **within sleep stage, across sleep stages, and across nights** on the
-public Sleep-EDF Expanded database. It reproduces every number, table, and figure
-reported in the paper from the raw recordings.
+> *IEEE Signal Processing in Medicine and Biology Symposium (SPMB) 2026*, poster abstract.
+> (Submitted paper title: "EEG Biometric Identity Is Sleep-Stage and Night Dependent: Per-Stage and Cross-Night Verification on Sleep-EDF".)
 
 ---
 
-## Summary
+## Correction (October 2026) — read this first
 
-We quantify how the identity information carried by sleep EEG depends on the sleep
-stage and the recording night. Using a subject- and session-disjoint protocol with a
-one-dimensional convolutional ArcFace encoder (128-D embeddings) and N-epoch probe
-fusion, verification is near-perfect within a single stage and night but degrades
-sharply when stage or night changes:
+A reviewer of the submitted paper inspected this repository (commit `c5370b6`) and found that, **for same-stage
+trials, probe epochs were drawn from the same pool that was averaged into the enrolment template.** We confirmed
+this. It inflated every within-stage number and the multi-stage enrolment result. The earlier README statement
+"templates and probes never share epochs" was wrong.
 
-| Condition | Equal Error Rate (EER) |
-|---|---|
-| Within-stage, within-night | 0.21% |
-| Across stages | 9.58% |
-| Across nights | 17.28% |
-| Across stages **and** nights | 23.87% |
-| Random baseline | ~49.6% |
+All results were recomputed under a corrected protocol in [`revision_2026-10/`](revision_2026-10/README.md).
+No model was retrained: the June encoder and its saved embeddings were re-scored, and night-two recordings were
+embedded with the same frozen encoder.
 
-A spectral band-ablation shows the identity signal is distributed across frequency
-bands, with the theta band contributing the largest single share. Multi-stage
-enrolment and periodic re-enrolment recover much of the lost performance. The
-practical message: **sleep-stage-blind biometric systems silently fail across stages
-and nights.**
+**Corrected protocol (applied to every condition):**
+- Per subject and stage, epochs are kept in chronological order: the first part forms the template, the last part
+  supplies probes, and the two are separated by at least 10 epochs of the same stage (at least 5 min).
+- The same templates and probe segments are used for within-stage, cross-stage and cross-night trials (paired comparisons).
+- A probe is the mean of 10 consecutive same-stage epochs; impostors are zero-effort.
+- Wake is restricted to 30 min around sleep (primary); the untrimmed analysis is reported as a sensitivity check.
+- 95% CIs: subject-level cluster bootstrap (1000 resamples, with replacement; copies of one subject are never
+  scored as impostors). Multiple comparisons: Holm.
+
+**Corrected results** (29 evaluation subjects, 28 with a second night; pooled-cell EER, wake trimmed):
+
+| Condition | Submitted (invalid) | Corrected EER, % [95% CI] |
+|---|---|---|
+| Within stage, within night | 0.21 | 4.85 [2.74, 7.76] |
+| Across stages | 9.58 | 12.10 [8.27, 15.42] |
+| Same stage, across nights | 17.28 | 19.36 [13.78, 24.69] |
+| Across stages and nights | 23.87 | 24.76 [19.49, 30.95] |
+| Random identity baseline | ~49.6 | 51.6 |
+
+- Cross-stage minus within-stage: +7.25 points [4.82, 9.39]; per-subject Wilcoxon p = 6.1e-8, d_z = 1.23.
+- Cross-night vs within-night on the same 28 subjects: 19.36% vs 4.91% (pooled-cell EER); per-subject Wilcoxon p = 7.1e-4.
+- Running the old (leaky) protocol inside the new code gives 0.22% / 9.61% (untrimmed wake, as in June), close to
+  the submitted 0.21% / 9.58%, which isolates the size of the error.
+- Withdrawn claims: the "46-fold" increase, "near-perfect" within-stage identity, wake as the most stable stage
+  across nights, the large multi-stage enrolment gain (9.6% → 4.4%), and the conclusion that stage-blind systems
+  "silently fail" or that stage-aware calibration is required.
+
+The original scripts and results are **kept unchanged** as the record of the submitted paper. Affected scripts
+carry a `SUPERSEDED` comment banner at the top; `results/` and `paper_assets/` contain a `SUPERSEDED.md` note.
+The exact state inspected by the reviewers is commit `c5370b6`. The corrected protocol, code, and results are in `revision_2026-10/` on the current main branch.
 
 ---
 
 ## Repository structure
 
 ```
-sleep_pipeline.py        Core cross-stage / cross-night verification pipeline
-sleep_pipeline_v2.py     Probe-fusion + per-stage EER protocol (paper version)
-sleep_pipeline_v3.py     Multi-stage enrolment experiment
-sleep_pipeline_v4.py     Periodic re-enrolment experiment
-encoder_train.py         1D-CNN ArcFace encoder training
-band_ablation2.py        Spectral band-ablation (which bands carry identity)
-stats_tests.py           Paired Wilcoxon test, Cohen's d, bootstrap CIs
-make_paper_assets.py     Generates all paper figures and tables
+revision_2026-10/                 CORRECTED protocol, code and results (use these)
+  README.md                       protocol, how to run, file list
+  AUDIT.md                        what was wrong, where, and what changed
+  code/rerun_leakfree.py          embed / main / band_pkl / numbers steps
+  code/make_numbers_extra.py      extra LaTeX macros for the abstract
+  code/make_abstract_fig.py       Figure 1 of the abstract
+  colab/leakfree_rescoring_colab.ipynb   CPU-only Colab notebook
+  results/                        JSON, CSV matrices, logs, DET scores, numbers*.tex, figure
+
+Original (June 2026, submitted paper; SUPERSEDED where marked)
+  encoder_train.py                1D-CNN ArcFace encoder training (training itself unaffected)
+  sleep_pipeline.py               early pipeline
+  sleep_pipeline_v2.py            per-stage / cross-stage protocol (leaky)
+  sleep_pipeline_v3.py            time-to-decision (leaky)
+  sleep_pipeline_v4.py            multi-stage enrolment, threshold transfer, DET (leaky)
+  crossnight.py                   night-2 preprocessing and cross-night scoring
+  reenroll.py                     re-enrolment (random split)
+  band_ablation2.py               band-stop ablation (leaky baseline)
+  stats_tests.py                  paired tests (leaky per-subject EER)
+  export_enc_matrix.py            old Fig. 2 matrix
+  make_paper_assets.py, demographics.py, medication.py
+  results/, paper_assets/         June outputs
 ```
 
 ---
 
 ## Data
 
-- **Database:** Sleep-EDF Expanded (Sleep Cassette), PhysioNet.
-  https://physionet.org/content/sleep-edfx/
-- **Channel:** Fpz–Cz EEG.
-- **Epochs:** 30-second, stage-labelled (W, N1, N2, N3, REM) per the accompanying
-  hypnogram annotations.
-- The raw EDF files are **not** redistributed here; download them directly from
-  PhysioNet. The pipeline reads the standard `*-PSG.edf` / `*-Hypnogram.edf` pairs.
+- **Database:** Sleep-EDF Expanded, Sleep Cassette subset (PhysioNet): https://physionet.org/content/sleep-edfx/
+- **Derivations:** Fpz–Cz and Pz–Oz EEG, 100 Hz; 30-s epochs with expert hypnograms (W, N1, N2, N3 [R&K 3–4 merged], REM).
+- **Split:** 73 subjects; 44 training / 29 evaluation, subject-disjoint (sorted IDs, shuffle seed 42, train fraction 0.6).
+- Raw EDF files are not redistributed; download them from PhysioNet.
+- The June encoder checkpoint (`encoder.pt`) and saved embeddings, which `revision_2026-10/` re-scores, are not
+  included in this repository.
 
----
+## Encoder
 
-## Protocol (leakage controls)
-
-- **Subject-disjoint** train/test split — no subject appears in both.
-- **Session-disjoint** cross-night evaluation — enrolment and probe come from
-  different nights.
-- **Enrolment/probe separation** — templates and probes never share epochs.
-- Equal error rate (EER) is reported within stage, across stages, and across nights.
-
----
+Four 1-D convolution blocks (kernel 7, stride 2, 32–128 filters, batch norm, ELU, dropout 0.3), global average
+pooling, linear layer to a 128-D unit-norm embedding; 204,384 parameters. ArcFace loss (s = 30, m = 0.30), Adam
+(lr 1e-3, weight decay 1e-4), batch 256, 40 epochs, final-epoch model; trained on training subjects only.
 
 ## Requirements
 
 ```
 python >= 3.9
-numpy, scipy, scikit-learn
-mne
-torch
-matplotlib
+numpy, scipy, scikit-learn      (scoring)
+torch, mne                      (embedding night-two recordings)
+matplotlib                      (figures)
 ```
+
+## Reproducing the corrected results
+
+See [`revision_2026-10/README.md`](revision_2026-10/README.md). In short, with `ROOT` = the June project folder
+(read-only) and `OUT` = a new folder:
 
 ```bash
-pip install numpy scipy scikit-learn mne torch matplotlib
+python revision_2026-10/code/rerun_leakfree.py embed    --root ROOT --out OUT
+python revision_2026-10/code/rerun_leakfree.py main     --root ROOT --out OUT --emb_n1 ROOT/features2_enc --emb_n2 OUT/emb_n2
+python revision_2026-10/code/rerun_leakfree.py band_pkl --root ROOT --out OUT
+python revision_2026-10/code/rerun_leakfree.py numbers  --out OUT
 ```
-
----
-
-## Reproducing the results
-
-1. Download Sleep-EDF Expanded from PhysioNet and set the data path inside the
-   pipeline script.
-2. Train the encoder:
-   ```bash
-   python encoder_train.py
-   ```
-3. Run the verification protocol (per-stage, cross-stage, cross-night):
-   ```bash
-   python sleep_pipeline_v2.py
-   ```
-4. Multi-stage enrolment and re-enrolment:
-   ```bash
-   python sleep_pipeline_v3.py
-   python sleep_pipeline_v4.py
-   ```
-5. Spectral band-ablation:
-   ```bash
-   python band_ablation2.py
-   ```
-6. Statistical tests and paper figures/tables:
-   ```bash
-   python stats_tests.py
-   python make_paper_assets.py
-   ```
-
-Trained checkpoints and preprocessed features are additionally archived on
-Hugging Face for convenience:
-https://huggingface.co/KanimozhiL16
-
----
 
 ## Hardware
 
-Experiments were run on NVIDIA A100 GPUs provided through the NVIDIA Academic Grant
-Program (awarded to S. Shridevi).
-
----
+Encoder training (June 2026): NVIDIA A100 GPUs through the NVIDIA Academic Grant Program (awarded to S. Shridevi).
+Re-scoring (October 2026): Google Colab, CPU only; 3.3 ms to embed one 30-s epoch.
 
 ## Citation
 
 ```bibtex
 @inproceedings{kanimozhi2026sleepeeg,
-  title     = {EEG Biometric Identity Is Sleep-Stage and Night Dependent:
-               Per-Stage and Cross-Night Verification on Sleep-EDF},
+  title     = {Sleep-Stage and Night Dependence of {EEG} Biometric Verification on {Sleep-EDF}},
   author    = {Kanimozhi, L. and Shridevi, S.},
   booktitle = {IEEE Signal Processing in Medicine and Biology Symposium (SPMB)},
   year      = {2026}
 }
 ```
 
----
-
 ## Acknowledgements
 
-We thank PhysioNet for the Sleep-EDF Expanded database. This work used NVIDIA A100
-GPUs provided through the NVIDIA Academic Grant Program (awarded to S. Shridevi).
+We thank PhysioNet for the Sleep-EDF Expanded database and the SPMB 2026 reviewers, one of whom identified the
+enrolment/probe error. This work used NVIDIA A100 GPUs provided through the NVIDIA Academic Grant Program
+(awarded to S. Shridevi). AI tools (Anthropic Claude) were used to assist with code review; the authors verified
+all code and results.
 
 ## License
 
-Released for academic and research use. Please cite the paper above if you use this
-code or build on it.
+Released for academic and research use. Please cite the paper above if you use this code or build on it.

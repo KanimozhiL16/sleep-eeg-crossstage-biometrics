@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# ======================================================================================
+# SUPERSEDED (Oct 2026). Kept unchanged below as the record of the submitted SPMB 2026 paper.
+# Issue: within-stage (diagonal) cells use the leaky template/probe construction (old Fig. 2).
+# Corrected protocol and results: revision_2026-10/ (see README.md, section 'Correction').
+# ======================================================================================
 """Export encoder 5x5 cross-stage EER matrix to enc_eer_fuse10.csv (for the main heatmap).
 Reuses features2_enc/ (EVAL subjects) — cache-only, no GPU/download.
 Run on Brev:  python export_enc_matrix.py --root ./"""

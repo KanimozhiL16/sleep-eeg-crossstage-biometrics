@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# ======================================================================================
+# SUPERSEDED (Oct 2026). Kept unchanged below as the record of the submitted SPMB 2026 paper.
+# Issue: scores() uses the leaky construction (old multi-stage 4.39%, threshold transfer,
+# FRR@FAR1%, DET); the 9.58 -> 4.39 comparison was not at equal enrolment length.
+# Corrected protocol and results: revision_2026-10/ (see README.md, section 'Correction').
+# ======================================================================================
 """
 Wave-1 add-on experiments (cache-only, no download). Reuses features2_enc/ (encoder) & features2/.
 EVAL subjects only; subject-disjoint impostors; enrol/probe disjoint epochs. Leakage-safe.

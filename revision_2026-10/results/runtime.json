@@ -1,0 +1,7 @@
+{
+  "encoder_parameters": 204384,
+  "model_size_MB_fp32": 0.78,
+  "ms_per_30s_epoch_batched": 3.261,
+  "device": "cpu",
+  "hardware": "x86_64"
+}

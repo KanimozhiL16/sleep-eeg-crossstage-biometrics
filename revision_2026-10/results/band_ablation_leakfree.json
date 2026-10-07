@@ -1,0 +1,110 @@
+{
+  "source": "re-scored from emb_ablation.pkl (June band-stop embeddings; delta = 0.5-4 Hz)",
+  "fuse": 1,
+  "baseline_within_EER": 7.39,
+  "filter": "Butterworth order 4, zero-phase (sosfiltfilt), band-stop; applied to enrolment AND probe epochs",
+  "encoder_retrained": false,
+  "bands": {
+    "delta": {
+      "within_EER": 9.78,
+      "dEER": 2.39,
+      "dEER_CI95": [
+        1.26,
+        3.61
+      ],
+      "per_subject_wilcoxon_vs_baseline": {
+        "n": 29,
+        "mean_a": 12.21,
+        "mean_b": 8.07,
+        "median_a": 12.71,
+        "median_b": 8.1,
+        "mean_diff": 4.14,
+        "cohens_dz": 1.4,
+        "p": 2.60770320892334e-08
+      },
+      "p_holm": 1.30385160446167e-07
+    },
+    "theta": {
+      "within_EER": 12.12,
+      "dEER": 4.72,
+      "dEER_CI95": [
+        2.72,
+        6.29
+      ],
+      "per_subject_wilcoxon_vs_baseline": {
+        "n": 29,
+        "mean_a": 13.99,
+        "mean_b": 8.07,
+        "median_a": 14.15,
+        "median_b": 8.1,
+        "mean_diff": 5.91,
+        "cohens_dz": 1.59,
+        "p": 2.9281330722765716e-06
+      },
+      "p_holm": 8.784399216829715e-06
+    },
+    "alpha": {
+      "within_EER": 9.25,
+      "dEER": 1.86,
+      "dEER_CI95": [
+        0.87,
+        2.94
+      ],
+      "per_subject_wilcoxon_vs_baseline": {
+        "n": 29,
+        "mean_a": 10.34,
+        "mean_b": 8.07,
+        "median_a": 9.9,
+        "median_b": 8.1,
+        "mean_diff": 2.27,
+        "cohens_dz": 1.04,
+        "p": 6.910413503646851e-07
+      },
+      "p_holm": 2.7641654014587402e-06
+    },
+    "sigma": {
+      "within_EER": 9.01,
+      "dEER": 1.62,
+      "dEER_CI95": [
+        0.45,
+        2.81
+      ],
+      "per_subject_wilcoxon_vs_baseline": {
+        "n": 29,
+        "mean_a": 9.8,
+        "mean_b": 8.07,
+        "median_a": 9.38,
+        "median_b": 8.1,
+        "mean_diff": 1.73,
+        "cohens_dz": 0.91,
+        "p": 5.964189767837524e-06
+      },
+      "p_holm": 1.1928379535675049e-05
+    },
+    "beta": {
+      "within_EER": 9.64,
+      "dEER": 2.25,
+      "dEER_CI95": [
+        0.54,
+        3.77
+      ],
+      "per_subject_wilcoxon_vs_baseline": {
+        "n": 29,
+        "mean_a": 10.88,
+        "mean_b": 8.07,
+        "median_a": 10.71,
+        "median_b": 8.1,
+        "mean_diff": 2.8,
+        "cohens_dz": 0.77,
+        "p": 0.00016040776468816045
+      },
+      "p_holm": 0.00016040776468816045
+    }
+  },
+  "between_bands": {
+    "friedman_across_bands_on_per_subject_dEER": {
+      "n": 29,
+      "p": 1.0175633210492775e-05
+    }
+  }
+}
